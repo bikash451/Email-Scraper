@@ -19,6 +19,7 @@ body {
     overflow-x: hidden;
 }
 
+/* Button styling */
 #scrapeEmails {
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
@@ -42,6 +43,45 @@ body {
 
 #scrapeEmails:active {
     transform: translateY(0);
+}
+
+.search-container {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px 16px 12px 40px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #f8f9ff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#searchInput:focus {
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#searchInput::placeholder {
+    color: #a0aec0;
+}
+
+.search-container::before {
+    content: "🔍";
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 1;
 }
 
 #emailList {
@@ -136,4 +176,12 @@ body {
 
 .email-item {
     animation: slideIn 0.3s ease-out;
+}
+
+mark {
+    background: linear-gradient(120deg, #f6e05e 0%, #ecc94b 100%);
+    color: #2d3748;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: 600;
 }
