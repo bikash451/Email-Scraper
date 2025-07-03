@@ -1,7 +1,6 @@
 let scrapeEmails = document.getElementById('scrapeEmails');
-let allEmails = []; // Store all emails for filtering
+let allEmails = []; 
 
-// Search functionality
 function setupSearch() {
     const searchInput = document.getElementById('searchInput');
     const emailList = document.getElementById('emailList');
@@ -28,7 +27,6 @@ function filterEmails(searchTerm) {
         filteredEmails.forEach(email => {
             const listItem = document.createElement('li');
             
-            // Highlight matching text
             if (searchTerm) {
                 const regex = new RegExp(`(${searchTerm})`, 'gi');
                 const highlightedEmail = email.replace(regex, '<mark>$1</mark>');
@@ -48,16 +46,13 @@ function filterEmails(searchTerm) {
     }
 }
 
-// Message listener to receive emails from content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.emails) {
-        allEmails = request.emails; // Store emails globally
+        allEmails = request.emails; 
         const searchInput = document.getElementById('searchInput');
         
-        // Clear search input
         searchInput.value = '';
         
-        // Display all emails initially
         filterEmails('');
         
         if (allEmails.length === 0) {
@@ -85,10 +80,8 @@ scrapeEmails.addEventListener("click", async() => {
 function scrapeEmailsFromPage() {
     const emailRegEx = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
     
-    // Get all text content from the page
     let pageText = document.body.innerText || document.body.textContent || '';
     
-    // Clean the text: remove extra whitespace and non-printable characters
     pageText = pageText.replace(/[\r\n\t]+/g, ' ').replace(/\s+/g, ' ');
     
     let emails = pageText.match(emailRegEx);
@@ -96,13 +89,10 @@ function scrapeEmailsFromPage() {
     let uniqueEmails = [];
     
     if (emails && emails.length > 0) {
-        // Remove duplicates and clean each email
         uniqueEmails = [...new Set(emails)].map(email => email.trim());
     }
     
-    // Send the actual emails array
     chrome.runtime.sendMessage({emails: uniqueEmails});
 }
 
-// Initialize search when popup loads
 document.addEventListener('DOMContentLoaded', setupSearch);
